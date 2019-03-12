@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="sidebarStyle.css">
+    <link rel="stylesheet" href="cvStyle.css">
+    <link rel="stylesheet" href="topbarStyle.css">
+    <link rel="stylesheet" href="loginStyle.css">
+    <link rel="stylesheet" href="leftMenu.css">
+    <script src="vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Dynamisk CV</title>
+</head>
+
+<body>
+
+    <div id="app" class="mainApp">
+        <!-- Sidebar -->
+        <span v-if="false" class="sidebar">
+            <div class="sidebarButtons" >
+                <button v-if="loggedIn" type="button" @click="logout">Logg ut</button>
+                <button type="button" @click="editMode = !editMode">Rediger</button>
+
+                <div class="styleButtons" v-if="editMode">
+                    <b>Tekstfarge:</b> <input type="color" 
+                        v-model:value="content.mainStyle.color" /></br>
+                    <b>Bakgrunnsfarge:</b> <input type="color" 
+                        v-model:value="content.mainStyle['background-color']" /></br>
+                    <b>Font:</b> 
+                    <select v-model="content.mainStyle['font-family']">
+                        <option v-for="(font, name) in fonts" 
+                        v-bind:value="font">{{name}}</option>
+                    </select></br></br>
+                </div>
+                
+                </br></br><b>CV:</b>
+                <input class="cvNameInput" v-model:value="cvName">
+                <button type="button" @click="save(cvName)">Lagre</button>
+                <button type="button" @click="download">Last ned</button>
+                <button type="button" @click="toggleCVmenu">Velg CV</button>
+            </div>
+
+            <div class="cvMenu" v-if="showCVmenu">
+                <template v-for="(item, key) in cvList">
+                    <button @click="loadData(item)">{{item}}</button>
+                    <span class="delete"><button @click="deleteData(item)">X</button></span>
+                </template>
+                <span v-if="1 > cvList.length">Ingen CVer lagret</span>
+                <button v-else @click="deleteAll">Slett Alle</button>
+            </div>
+        </span>
+
+        <!-- Top bar -->
+        <div class="topbar">
+            <h1>    Funkweb CV Portal</h1>
+            <button v-if="showCV == false" type="button" @click="showLogin = !showLogin">Login</button>
+            <button v-if="showCV" type="button" @click="logout">Logout</button>
+            <button v-if="showCV" @click="editMode = !editMode">Edit Mode</button>
+        </div>    
+        
+        <!-- Login Menu -->
+        <div style="height: 5vh"></div>
+        <div v-if="showLogin" class="login">
+            <table>
+                <tr>
+                    <td class="loginLabel"><b>Email: </b></td>
+                    <td><input placeholder="..." v-model:value="profile"></td>
+                </tr><tr>
+                    <td class="loginLabel"><b>Password: </b></td>
+                    <td><input placeholder="..." v-model:value="password" type="password"></td>
+                </tr>
+            </table><table>
+                <tr>
+                    <td><button type="button" @click="login">Login</button></td>
+                    <td><button type="button" @click="createProfile">Register</button></td>
+                </tr>
+            </table>
+            <span v-if="error" class="error">Error: {{errorMsg}}</span><span v-else><br></span>
+        </div>
+
+        <!-- Left Menu -->
+        <div v-if="showCV" class="left side">
+            <div class="sideContent">
+                <input class="cvNameInput" v-model:value="cvName">
+                <button v-if="showCV" @click="save(cvName)">Save</button>
+                <button v-if="showCV" @click="download">Download</button>
+                <button v-if="showCV" @click="toggleCVmenu">Select CV</button>
+                <div v-if="showCVmenu" class="cvMenu">
+                    <template v-for="(item, key) in cvList">
+                        <button @click="loadData(item)">{{item}}</button>
+                        <span class="delete"><button @click="deleteData(item)">X</button></span>
+                    </template>
+                    <span v-if="1 > cvList.length">No saved CVs</span>
+                    <button v-else @click="deleteAll">Slett Alle</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CV content -->
+        <div v-if="showCV" class="mainContainer" id="print">
+            <div class="main" v-bind:style="content.mainStyle">
+
+                <!-- Name & personal info -->
+                <div class="image">
+                    <img :src="content.profileImg">
+                </div>
+                <div class="info">
+                    <h2 class="name">
+                        <input v-if="editMode" v-model:value="content.name"></input> 
+                        <span v-else>{{content.name}}</span>
+                    </h2>
+                    <table>
+                    <template v-for="item in content.personInfo">
+                        <tr><td>
+                            <input v-if="editMode" v-model:value="item.title"></input> 
+                            <b v-else>{{item.title}}:</b>
+                        </td><td>
+                            <input v-if="editMode" v-model:value="item.text"></input> 
+                            <span  class="infoText" v-else>{{item.text}}</span>
+                        </td></tr>
+                    </template>
+                </table>
+                </div> </br>
+
+                <!-- Intro text -->
+                <input v-if="editMode" v-model:value="content.intro.title"></input> 
+                <b v-else class="headline">{{content.intro.title}}</b></br>
+                <textarea v-if="editMode" v-model:value="content.intro.text"></textarea> 
+                <span v-else>{{content.intro.text}}</span></h1>
+                <span></br></br></span>
+
+                <!-- Education and experience lists -->
+                <template v-for="element in content.lists">
+                    <span v-if="editMode">
+                        <input class="headline" v-if="editMode" v-model:value="element.title">
+                        <button v-if="editMode" @click="element.list.unshift(defaultListElement)">Legg til</button>
+                        <button v-if="editMode" @click="element.list.sort(sortListElements)">Sorter</button>
+                    </span>
+
+                    <table class="expTable">             
+                    <thead v-if="editMode === false"><tr>
+                        <th class="duration">
+                            <span>{{element.title}}</span>
+                        </th>
+                        <th class="tableInfo"></th>
+                    </tr></thead>
+
+                    <tbody>
+                        <template v-for="(item, index) in element.list">
+                            <tr v-if="editMode"><td>
+                                Fra:<input type="number" class="monthInput" v-model:value="item.duration.from.month"></input>
+                                <input type="number" class="yearInput" v-model:value="item.duration.from.year"></input>
+                                Til:<input type="number" class="monthInput" v-model:value="item.duration.to.month"></input>
+                                <input type="number" class="yearInput" v-model:value="item.duration.to.year"></input>
+                                <input v-model:value="item.title"></input>
+                                <button v-if="editMode" @click="list.splice(index,1)">Slett</button>
+                            </td></tr>
+                            <tr v-if="editMode"><textarea v-if="editMode" v-model:value="item.text"></textarea> </tr>
+                            <tr v-else>
+                                <td>{{getDurationText(item.duration)}}</td>               
+                                <td><div class="title">{{item.title}}</div>{{item.text}}</td>
+                            </tr>
+                        </span></template>
+                    </tbody>
+                    </table>
+                </template></br>
+
+                <!-- Other information -->
+                <input v-if="editMode" v-model:value="content.other.title"></input> 
+                <b v-else class="headline">{{content.other.title}}</b></br>
+                <textarea v-if="editMode" v-model:value="content.other.text"></textarea> 
+                <span v-else>{{content.other.text}}</span></h1></br></br>
+            </div>
+        </div>
+
+        <!-- Right menu -->
+        <div v-if="showCV" class="right side">
+            <div class="sideContent">
+                <b>Font:</b> 
+                <select v-model="content.mainStyle['font-family']">
+                    <option v-for="(font, name) in fonts" 
+                    v-bind:value="font">{{name}}</option>
+                </select></br>
+                <b>Profile image: </b><input v-model:value="content.profileImg">
+            </div>      
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
