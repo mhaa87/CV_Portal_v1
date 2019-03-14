@@ -43,7 +43,7 @@ h2{
     height: 100%;
     position: fixed;
     top: 5vh;
-    z-index: 4;
+    z-index: 3;
     width: 27%;
 }
 
@@ -62,24 +62,19 @@ h2{
 
 }
 
-.image {
-    height: 150px;
-    float: right;
-}
-
-.image img{
-    width: auto;
-    height: 100%;
-}
-
-.mainContainer{
+.center{
     position: fixed;
     top: 5vh;
     left: 27%;
     width: 46%;
     height: 95vh;
-    background-color: rgb(255, 255, 255);
     overflow-y:auto;
+    z-index: 5;
+    background-color: rgba(212, 229, 247, 1);
+}
+
+.cvContent{
+    background-color: rgb(255, 255, 255);
 }
 
 .main{
@@ -114,9 +109,21 @@ button{
     text-transform: capitalize;
 }
 
+.profileImg{
+    display: flex;
+    align-content: flex-end;
+}
+
+.profileImg img{
+    width: auto;
+    height: 150px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 .info{
     text-align: left;
-    /* float: left; */
+    width: 100%;
 }
 
 input[type=number]::-webkit-inner-spin-button, 

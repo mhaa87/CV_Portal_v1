@@ -10,8 +10,8 @@ var app = new Vue({
         showCVmenu: false,
         error: false,
         errorMsg: "",
-        profile: "test",
-        password: "test",
+        profile: "test@mail.com",
+        password: "testpassword",
         cvList: [],
         cvName: "default",
         fonts: {"Times New Roman": "'Times New Roman', Times, serif"},
@@ -28,19 +28,19 @@ var app = new Vue({
             other: {title: "Other", text: "..."},
             lists: [
                 {title: "Experience", list: [
-                    { duration: {from: {year: "2016", month: "01"}, to: {year: "2019", month: "03"}}, title: "Jobb 3", text: "Info..."},
-                    { duration: {from: {year: "2015", month: "02"}, to: {year: "2015", month: "11"}}, title: "Jobb 2", text: "Info..."}, 
-                    { duration: {from: {year: "2013", month: "09"}, to: {year: "2014", month: "10"}}, title: "Jobb 1", text: "Info..."}]},
+                    { duration: {from: {year: "2016", month: "01"}, to: {year: "2019", month: "03"}}, title: "Job 3", text: "Info..."},
+                    { duration: {from: {year: "2015", month: "02"}, to: {year: "2015", month: "11"}}, title: "Job 2", text: "Info..."}, 
+                    { duration: {from: {year: "2013", month: "09"}, to: {year: "2014", month: "10"}}, title: "Job 1", text: "Info..."}]},
                 {title: "Education", list: [
                     { duration: {from: {year: "2010", month: ""}, to: {year: "2013", month: ""}}, title: "Study 2", text: "Info..."}, 
                     { duration: {from: {year: "2009", month: ""}, to: {year: "2010", month: ""}}, title: "Study 1", text: "Info..."}]},
                 ],
-            mainStyle: {
-                color: "#000000",
-                // 'background-color': "#ffffff", 
+            font: {
                 'font-family': "'Times New Roman', Times, serif",
-                // 'height': '100%',
             },
+            layout: {
+
+            }
         }
         
     },
@@ -72,7 +72,8 @@ var app = new Vue({
             axios.post(this.uri + "/newProfile", {"profile": this.profile, "password": this.password}).then(res => {
                 this.loggedIn = res.data.status;
                 this.error = !res.data.status;
-                if(this.error) this.errorMsg = res.data.msg;
+                if(this.error) {this.errorMsg = res.data.msg; return;}
+                this.showLogin = false;
             }).catch(err => {console.log(err)});
         },
 
@@ -108,7 +109,7 @@ var app = new Vue({
             var popupWin = window.open('', '_blank', 'width=1200,height=900,location=no,left=200px');
             popupWin.document.open();
             popupWin.document.write('<html><title>Preview</title><link rel="stylesheet" type="text/css" href="cvStyle.css" /></head><body onload="window.print()">'
-             + '<div style="' + this.printStyle(this.content.mainStyle) + '">'); 
+             + '<div style="' + this.printStyle(this.content.font) + '">'); 
             popupWin.document.write(cv.innerHTML);
             popupWin.document.write('</div></body></html>');
             popupWin.document.close();
