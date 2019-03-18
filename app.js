@@ -51,7 +51,7 @@ var app = new Vue({
             var text = "";
             if(duration.from.month.length > 0) text += duration.from.month + ".";
             text += duration.from.year;
-            if(duration.to.year.length > 0) text += "-"
+            if(duration.to.year.length > 0) text += "-";
             if(duration.to.month.length > 0) text += duration.to.month + ".";
             if(duration.to.year.length > 0) text += duration.to.year;
             return text;

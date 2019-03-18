@@ -50,24 +50,19 @@
         <div class="left side">
             <div v-if="showCV" class="sideContent">
                 <input class="cvNameInput" v-model:value="cvName"></br>
-                <table>
-                    <tr><td>Download</td><td @click="download" class="menuButton"><img src="Icons\download.svg"></td></tr>
-                    <tr><td>Edit</td><td @click="editMode = !editMode" class="menuButton"><img src="Icons\edit.svg"></td></tr>
-                    <tr v-if="loggedIn"><td>Save</td><td @click="save(cvName)" class="menuButton"><img src="Icons\save.svg"></td></tr>
-                    <tr v-if="loggedIn"><td>Select CV</td><td @click="toggleCVmenu" class="menuButton"><img src="Icons\open.svg"></td></tr>
+                <table class="sideButtonTable">
+                    <tr><td class="sideButtonText">Download</td><td @click="download" class="menuButton"><img src="Icons\download.svg"></td></tr>
+                    <tr><td class="sideButtonText">Edit</td><td @click="editMode = !editMode" class="menuButton"><img src="Icons\edit.svg"></td></tr>
+                    <tr v-if="loggedIn"><td class="sideButtonText">Save</td><td @click="save(cvName)" class="menuButton"><img src="Icons\save.svg"></td></tr>
+                    <tr v-if="loggedIn"><td class="sideButtonText"> Load CV</td><td @click="toggleCVmenu" class="menuButton"><img src="Icons\open.svg"></td></tr>
                 </table>
-                <!-- <button @click="download">Download</button>
-                <button @click="editMode = !editMode">Edit Mode</button>
-                <button v-if="loggedIn" @click="toggleCVmenu">Select CV</button>
-                <button v-if="loggedIn" @click="save(cvName)">Save</button>
-                <div v-else>Log in to save the CV to your profile</div> -->
                 <div v-if="showCVmenu && loggedIn" class="cvMenu">
                     <template v-for="(item, key) in cvList">
                         <button @click="loadData(item)">{{item}}</button>
                         <span class="delete"><button @click="deleteData(item)">X</button></span>
                     </template>
                     <span v-if="1 > cvList.length">No saved CVs</span>
-                    <button v-else @click="deleteAll">Slett Alle</button>
+                    <button v-else @click="deleteAll">Delete All</button>
                 </div>
             </div><div v-else>
 
@@ -130,8 +125,8 @@
                 <template v-for="element in content.lists">
                     <span v-if="editMode">
                         <input class="headline" v-if="editMode" v-model:value="element.title">
-                        <button v-if="editMode" @click="element.list.unshift(defaultListElement)">Legg til</button>
-                        <button v-if="editMode" @click="element.list.sort(sortListElements)">Sorter</button>
+                        <button v-if="editMode" @click="element.list.unshift(defaultListElement)">Add</button>
+                        <button v-if="editMode" @click="element.list.sort(sortListElements)">Sort list</button>
                     </span>
 
                     <table class="expTable">             
@@ -150,7 +145,7 @@
                                 To:<input type="number" class="monthInput" v-model:value="item.duration.to.month"></input>
                                 <input type="number" class="yearInput" v-model:value="item.duration.to.year"></input>
                                 <input v-model:value="item.title"></input>
-                                <button v-if="editMode" @click="list.splice(index,1)">Slett</button>
+                                <button v-if="editMode" @click="list.splice(index,1)">Delete</button>
                             </td></tr>
                             <tr v-if="editMode"><textarea v-if="editMode" v-model:value="item.text"></textarea> </tr>
                             <tr v-else>

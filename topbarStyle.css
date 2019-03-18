@@ -5,9 +5,9 @@
     background-color: rgba(212, 229, 247, 1);
     height: 5vh;
     z-index: 6;
-    -webkit-box-shadow: inset 0px -3px 3px -2px rgb(0, 0, 0), 0px 3px 3px -2px rgb(0, 0, 0);
-    -moz-box-shadow: inset 0px -3px 3px -2px rgb(0, 0, 0), 0px 3px 3px -2px rgb(0, 0, 0);
-    box-shadow: inset 0px -3px 3px -2px rgb(0, 0, 0), 0px 3px 3px -2px rgb(0, 0, 0);
+    -webkit-box-shadow: inset 0px -2px 2px -1px rgb(0, 0, 0), 0px 2px 2px -2px rgb(0, 0, 0);
+    -moz-box-shadow: inset 0px -2px 2px -1px rgb(0, 0, 0), 0px 2px 2px -2px rgb(0, 0, 0);
+    box-shadow: inset 0px -2px 2px -1px rgb(0, 0, 0), 0px 2px 2px -2px rgb(0, 0, 0);
     display: flex;
     align-items: center;
 }

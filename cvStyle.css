@@ -51,14 +51,14 @@ h2{
     left: 73%;
     /* -webkit-box-shadow: inset 14px 0px 32px -10px rgba(0,0,0,1); */
     /* -moz-box-shadow: inset 14px 0px 32px -10px rgba(0,0,0,1); */
-    box-shadow: inset 7px 0px 16px -5px rgba(0,0,0,1);
+    box-shadow: inset 5px 0px 14px -5px rgba(0,0,0,1);
 }
 
 .side.left {
     left: 0;
     /* -webkit-box-shadow: inset -14px 0px 16px -10px rgba(0,0,0,1); */
     /* -moz-box-shadow: inset -14px 0px 16px -10px rgba(0,0,0,1); */
-    box-shadow: inset -7px 0px 16px -5px rgba(0,0,0,1);
+    box-shadow: inset -5px 0px 14px -5px rgba(0,0,0,1);
 
 }
 
