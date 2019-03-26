@@ -24,6 +24,15 @@ h2{
     /* text-align: center; */
 }
 
+.homepage{
+    font-size: 28px;
+    text-align: center;
+}
+
+.homepage ul{
+    margin-top: 20%;
+}
+
 .error{
     color: rgb(221, 47, 47);
     border: 1px;
@@ -33,17 +42,12 @@ h2{
     text-align: center;
 }
 
-.sideContent{
-    margin: 5%;
-    margin-left: 10%;
-}
-
 .side{
     /* background-color: #BAD2E9;  */
     height: 100%;
     position: fixed;
     top: 5vh;
-    z-index: 3;
+    z-index: 1;
     width: 27%;
 }
 
@@ -75,6 +79,7 @@ h2{
 
 .cvContent{
     background-color: rgb(255, 255, 255);
+    box-shadow: inset 1px 0px 4px -2px rgb(0, 0, 0), 3px 0px 6px -2px rgb(0, 0, 0);
 }
 
 .main{

@@ -1,50 +1,94 @@
 .menuButton{
-    /* border: solid 12px white; */
-    border-radius: 50%;
-    /* margin: 5px; */
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
     padding: 12px;
-    /* height: 25px;
-    width: 25px; */
-    background-color: rgb(238, 245, 252);
+    background-color: rgb(209, 228, 248);
     display: flex;
     vertical-align: middle;
+    box-shadow: inset -3px -3px 2px -2px rgb(0, 0, 0), inset 0px 3px 2px -2px rgba(255, 255, 255, 0.5);
 
 }
 
-.menuButton:hover{
-    /* border: solid 12px rgb(224, 224, 224);
-    background-color: rgb(224, 224, 224); */
-    background-color: rgb(199, 211, 223);
+
+.sideButtonText{
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 24px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: rgb(209, 228, 248);
+    box-shadow: inset 0px -3px 2px -2px rgb(0, 0, 0), inset 3px 3px 2px -2px rgba(255, 255, 255, 0.5);
+
 }
 
-.menuButton:active{
-    /* border: solid 15px black; */
+.sideButtonTable tr:hover .sideButtonText{
+    background-color: rgb(182, 202, 223);
+    box-shadow: inset 3px 3px 2px -2px rgb(0, 0, 0), inset 0px -3px 2px -2px rgba(255, 255, 255, 0.5);
+    cursor: default;
+}
+
+.sideButtonTable tr:hover .menuButton{
+    background-color: rgb(182, 202, 223);
+    box-shadow: inset 0px 3px 2px -2px rgb(0, 0, 0), inset -3px -3px 2px -2px rgba(255, 255, 255, 0.5);
+    cursor: default;
+}
+
+.sideButtonTable tr:active .sideButtonText{
+    background-color: rgb(152, 170, 189);
+    box-shadow: inset 5px 5px 2px -2px rgb(0, 0, 0), inset 0px -5px 4px -4px rgba(255, 255, 255, 0.9);
+    cursor: default;
+}
+
+.sideButtonTable tr:active .menuButton{
+    background-color: rgb(152, 170, 189);
+    box-shadow: inset 0px 5px 2px -2px rgb(0, 0, 0), inset -5px -5px 4px -4px rgba(255, 255, 255, 0.9);
+    cursor: default;
 }
 
 .menuButton img{
     margin-left: auto;
     margin-right: auto;
     /* height: 100%; */
-    height: 27px;
-    width: 27px;
-}
-
-.sideButtonText{
-    vertical-align: middle;
-    font-weight: bold;
-    font-size: 24px;
-    padding-right: 10px;
-    /* border: solid 2px black;
-    border-right: none;
-    border-radius: 50% 0% 0% 50%;
-    background-color: rgba(57, 70, 70, 0.473); */
-
+    height: 20px;
+    width: 20px;
 }
 
 .sideButtonTable{
     margin-left: auto;
     margin-right: 0;
+    border-spacing: 0px 5px;
+}
 
+.menuLeft{
+    width: 23%;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.menuCenter{
+    width: 46%;
+}
+
+.menuRight{
+    width: 23%;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.editMenu{
+    position: fixed;
+    top: 5vh;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 45vh;
+    z-index: 2;
+    padding: 20px;
+    /* background-color: rgb(158, 180, 202); */
+    /* box-shadow: inset 3px 0px 6px -2px rgba(0,0,0,1), inset 0px 3px 6px -2px rgba(0,0,0,1), 0px 2px 5px 0px rgba(255, 255, 255, 0.432); */
+    /* box-shadow:0px 2px 5px 0px rgba(255, 255, 255, 0.432); */
 }
 
 .cvMenu {

@@ -25,6 +25,8 @@
 }
 
 .rightSide{
+    display: flex;
+    align-items: center;
     margin-left: auto;
     margin-right: 2.5%;
     height: 100%;
@@ -41,10 +43,12 @@
 }
 
 .topbutton.unselected{
+    box-shadow: inset 2px 0px 2px 0px rgb(255, 255, 255, 0.4), inset -2px 0px 2px 0px rgb(0, 0, 0, 0.75);
     background-color: rgba(212, 229, 247, 0);
 }
 
 .topbutton.selected{
+    box-shadow: inset 2px 0px 2px 0px rgba(0, 0, 0, 0.4);
     background-color: rgba(54, 86, 122, 0.356);
 }
 

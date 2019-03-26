@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Dynamisk CV</title>
     <link rel="stylesheet" href="sidebarStyle.css">
     <link rel="stylesheet" href="cvStyle.css">
     <link rel="stylesheet" href="topbarStyle.css">
@@ -9,7 +10,11 @@
     <link rel="stylesheet" href="leftMenu.css">
     <script src="vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <title>Dynamisk CV</title>
+
+    <!-- google sign-in -->
+    <!-- <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script> -->
 </head>
 
 <body>
@@ -18,43 +23,106 @@
         <!-- Top bar -->
         <div class="topbar">
             <h1>    Funkweb CV Portal</h1>
-            <button class="topbutton" :class="{selected: !showCV, unselected: showCV}" @click="showCV = false">Home</button>
-            <button class="topbutton" :class="{selected: showCV, unselected: !showCV}" @click="showCV = true">My CV</button>
-            <div class="rightSide">
-                <span v-if="loggedIn">Logged in: {{profile}}</span>
+            <button class="topbutton" :class="{selected: page==='home', unselected: page!=='home'}" @click="page = 'home'">Home</button>
+            <button class="topbutton" :class="{selected: page==='cv', unselected: page!=='cv'}" @click="page = 'cv'">My CV</button>
+            <button class="topbutton" :class="{selected: page==='guide', unselected: page!=='guide'}" @click="page = 'guide'">Guide</button>
+            <button class="topbutton" :class="{selected: page==='tips', unselected: page!=='tips'}" @click="page = 'tips'">CV Tips</button>
+
+            <span class="rightSide">
+                <span v-if="loggedIn">Logged in: {{user.name}}</span>
                 <button v-if="loggedIn" class="topbutton unselected" @click="logout">Logout</button>
-                <button v-else class="topbutton unselected" @click="showLogin = !showLogin">Login</button> 
-            </div>
+                <button v-if="!loggedIn" class="topbutton" :class="{selected: showLogin && !register, unselected: !showLogin || register}" 
+                @click="showLogin = register ? true : !showLogin; register = false">Login</button> 
+                <button v-if="!loggedIn" class="topbutton" :class="{selected: showLogin && register, unselected: !showLogin || !register}" 
+                @click="showLogin = register ? !showLogin : true; register = showLogin">Register</button>   
+            </span>
+
+            <!-- Google sign-in -->
+            <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+            <script>
+                function onSignIn(googleUser) {
+                // Useful data for your client-side scripts:
+                var profile = googleUser.getBasicProfile();
+                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log("Image URL: " + profile.getImageUrl());
+                console.log("Email: " + profile.getEmail());
+        
+                // The ID token you need to pass to your backend:
+                var id_token = googleUser.getAuthResponse().id_token;
+                console.log("ID Token: " + id_token);
+                }-->
         </div>    
         
         <!-- Login Menu -->
         <div v-if="showLogin" class="login">
+            <!-- <form @submit.prevent="() => register ? createProfile : login"> -->
+            <form @submit.prevent="login">
             <table>
-                <tr>
+                <tr v-if="register">
+                    <td class="loginLabel"><b>Username: </b></td>
+                    <td><input placeholder="..." v-model:value="user.name"></td>
+                </tr><tr>
                     <td class="loginLabel"><b>Email: </b></td>
-                    <td><input placeholder="..." v-model:value="profile"></td>
+                    <td><input placeholder="..." v-model:value="user.email" type="email"></td>
                 </tr><tr>
                     <td class="loginLabel"><b>Password: </b></td>
-                    <td><input placeholder="..." v-model:value="password" type="password"></td>
-                </tr>
-            </table><table>
-                <tr>
-                    <td><button @click="login">Login</button></td>
-                    <td><button @click="createProfile">Register</button></td>
+                    <td><input placeholder="..." v-model.lazy:value="user.password" type="password"></td>
+                </tr><tr>
+                    <td v-if="register"><button type="submit">Register</button></td>
+                    <td v-else><button type="submit">Login</button></td>
+                    <td><b>Automatic login: </b><input v-model:value="automaticLogin" type="checkbox"></td>
                 </tr>
             </table>
+            </form>
             <span v-if="error" class="error">Error: {{errorMsg}}</span><span v-else><br></span>
         </div>
 
+        <!-- Edit menu -->
+        <table v-if="page==='cv'" class="editMenu"><tr>
+            <td class="menuLeft">
+                <!-- <input class="cvNameInput" v-model:value="cvName"></br> -->
+                <table class="sideButtonTable">
+                    <tr @click="download"><td class="sideButtonText">Download</td><td class="menuButton"><img src="Icons\download.svg"></td></tr>
+                    <tr @click="editMode = !editMode"><td class="sideButtonText">Edit</td><td class="menuButton"><img src="Icons\edit.svg"></td></tr>
+                    <tr v-if="loggedIn" @click="save(cvName)"><td class="sideButtonText">Save</td><td class="menuButton"><img src="Icons\save.svg"></td></tr>
+                    <tr v-if="loggedIn" @click="save(cvName)"><td class="sideButtonText">New CV</td><td class="menuButton"><img src="Icons\new.svg"></td></tr>
+                    <tr v-if="loggedIn" @click="toggleCVmenu"><td class="sideButtonText">Open CV</td><td class="menuButton"><img src="Icons\open_2.svg"></td></tr>
+                </table>
+                <div v-if="showCVmenu && loggedIn" class="cvMenu">
+                    <template v-for="(item, key) in cvList">
+                        <button @click="loadData(item)">{{item}}</button>
+                        <span class="delete"><button @click="deleteData(item)">X</button></span>
+                    </template>
+                    <span v-if="1 > cvList.length">No saved CVs</span>
+                    <button v-else @click="deleteAll">Delete All</button>
+                </div>
+            </td><td class="menuCenter"></td>
+            <td class="menuRight">
+                <b>Font:</b> 
+                <select v-model="content.font['font-family']" :style="content.font">
+                    <option v-for="font in fonts" 
+                    :style="font.style"
+                    v-bind:value="font.value">{{font.name}}</option>
+                </select></br>
+                <b>Profile image: </b><input v-model:value="content.profileImg">
+            </td>
+        </tr></table>
         <!-- Left Menu -->
-        <div class="left side">
-            <div v-if="showCV" class="sideContent">
+        <!-- <div class="left side">
+            <div v-if="page==='cv'" class="editMenu">
                 <input class="cvNameInput" v-model:value="cvName"></br>
                 <table class="sideButtonTable">
-                    <tr><td class="sideButtonText">Download</td><td @click="download" class="menuButton"><img src="Icons\download.svg"></td></tr>
+                    <tr><td class="sideButtonText">Download</td>
+                        <td @click="download" class="menuButton">
+                            <img src="Icons\download.svg"></td>
+                    </tr>
                     <tr><td class="sideButtonText">Edit</td><td @click="editMode = !editMode" class="menuButton"><img src="Icons\edit.svg"></td></tr>
                     <tr v-if="loggedIn"><td class="sideButtonText">Save</td><td @click="save(cvName)" class="menuButton"><img src="Icons\save.svg"></td></tr>
-                    <tr v-if="loggedIn"><td class="sideButtonText"> Load CV</td><td @click="toggleCVmenu" class="menuButton"><img src="Icons\open.svg"></td></tr>
+                    <tr v-if="loggedIn"><td class="sideButtonText">New CV</td><td @click="save(cvName)" class="menuButton"><img src="Icons\new.svg"></td></tr>
+                    <tr v-if="loggedIn"><td class="sideButtonText">Open CV</td><td @click="toggleCVmenu" class="menuButton"><img src="Icons\open_2.svg"></td></tr>
                 </table>
                 <div v-if="showCVmenu && loggedIn" class="cvMenu">
                     <template v-for="(item, key) in cvList">
@@ -67,31 +135,36 @@
             </div><div v-else>
 
             </div>
-        </div>
+        </div> -->
 
         <!-- Right menu -->
-        <div class="right side">
-            <div v-if="showCV" class="sideContent">
+        <!-- <div class="right side">
+            <div v-if="page==='cv'" class="sideContent">
                 <b>Font:</b> 
-                <select v-model="content.font['font-family']">
-                    <option v-for="(font, name) in fonts" 
-                    v-bind:value="font">{{name}}</option>
+                <select v-model="content.font['font-family']" :style="content.font">
+                    <option v-for="font in fonts" 
+                    :style="font.style"
+                    v-bind:value="font.value">{{font.name}}</option>
                 </select></br>
                 <b>Profile image: </b><input v-model:value="content.profileImg">
             </div>      
-        </div>
+        </div> -->
 
         <!-- Home page -->
-        <div v-if="showCV === false" class="center">
+        <div v-if="page==='home'" class="homepage center">
+            <div>
             <ul>
                 <li>Create and edit your own CV from a template</li>
                 <li>Print the CV or download it as pdf</li>
-                <li>Save multiple CVs to your profile online</li>
+                <li>Save CVs to your profile online</li>
             </ul>
+            </div>
         </div>
 
-        <!-- CV content -->
-        <div v-if="showCV" class="center cvContent" id="print">
+        <!-- Guide page -->
+
+        <!-- CV page -->
+        <div v-if="page==='cv'" class="center cvContent" id="print">
             <div class="main" v-bind:style="content.font">
 
                 <!-- Name & personal info -->
