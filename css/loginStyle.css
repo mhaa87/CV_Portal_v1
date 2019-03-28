@@ -1,0 +1,55 @@
+.login{
+    box-sizing: border-box;
+    padding: 15px 20px 15px 20px;
+    box-shadow: inset 1px 1px 4px -1px rgba(0,0,0,1);
+}
+
+
+.error{
+    color: rgb(221, 47, 47);
+    border: 1px;
+    border-style: solid;
+    border-color: brown;
+    background-color: rgb(241, 241, 241);
+    text-align: center;
+}
+
+.login table{
+    /* margin: auto; */
+}
+
+.loginLabel{
+    width: 30%;
+}
+
+.loginContent{
+    margin: auto;
+    padding-top: 10%;
+    width: 100mm;
+    display: grid;
+    font-size: 24px;
+}
+.loginContent td{
+    vertical-align: middle;
+}
+
+.loginContent table{
+    table-layout:fixed;
+    width:100%;
+}
+
+.loginContent input{
+    font-size: inherit;
+    width: 100%;
+}
+
+.loginContent button{
+    font-size: inherit;
+    padding: 10px;
+    width: 100%;
+}
+
+.login input{
+    font-family: inherit;
+    color: inherit;
+}
