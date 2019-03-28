@@ -20,36 +20,69 @@
 </head>
 
 <body>
-    <div id="app" class="mainApp"><table>
-        <tr><!-- Left Side --><td class="side">
+    <div id="app" class="mainApp"><table><tr>
+
+        <!-- Left Side -->
+        <td class="side">
 
             <!-- Top Bar -->
             <div class="topbar"><h1>    Funkweb CV Portal</h1></div>
 
-            <!-- Nav Menu --><div class="navMenu">
-                <button :class="{selected: page==='home', unselected: page!=='home'}" @mousedown="page = 'home'">Home</button>
+            <!-- Nav Menu -->
+            <div class="navMenu">
                 <button :class="{selected: page==='cv', unselected: page!=='cv'}" @mousedown="page = 'cv'">My CV</button>
+                <button :class="{selected: page==='home', unselected: page!=='home'}" @mousedown="page = 'home'">Home</button>
                 <button :class="{selected: page==='guide', unselected: page!=='guide'}" @mousedown="page = 'guide'">Guide</button>
                 <button :class="{selected: page==='tips', unselected: page!=='tips'}" @mousedown="page = 'tips'">CV Tips</button>
 
-        </td><!-- Middle --><td class="middle">
+        </td>
+        
+        <!-- Middle -->
+        <td class="middle">
+
             <div class="topbar">
-                <!-- Options Menu --><div v-if="page=='cv'" class="options">
-                <span @mousedown="download" class="unselected" style="max-width: 23%">
-                    Download<img src="Icons\download.svg"></span>
-                <span @mousedown="editMode = !editMode" :class="{selected: editMode, unselected: !editMode}" style="max-width: 15%">
-                    Edit<img src="Icons\edit.svg"></span>
-                <span v-if="loggedIn" @mousedown="save(cvName)" class="unselected">
-                    Save<img src="Icons\save.svg"></span>
-                <span v-if="loggedIn" @mousedown="newCV = !newCV" class="unselected">
-                    New<img src="Icons\new.svg"></span>
-                <span v-if="loggedIn" @mousedown="toggleCVmenu" :class="{selected: showCVmenu, unselected: !showCVmenu}">
-                    Open<img src="Icons\open_2.svg"></span>
+
+                <!-- Options Menu -->
+                <div v-if="page=='cv'" class="options">
+                <button @mousedown="download" class="unselected">Download</button>
+                <button @mousedown="editMode = !editMode" :class="{selected: editMode, unselected: !editMode}">Edit</button>
+                <button v-if="loggedIn" @mousedown="save(cvName)" class="unselected">Save</button>
+                <button v-if="loggedIn" @mousedown="newCV = !newCV" class="unselected">New</button>
+                <button v-if="loggedIn" @mousedown="toggleCVmenu" :class="{selected: showCVmenu, unselected: !showCVmenu}">Open</button>
                 <span class="newCV" v-if="newCV">
-                        <input><button>Save</button></span></div>
+                    <input><button>Save</button>
+                </span></div>
             </div>
           
-            <!-- CV --><div v-if="page==='cv'" class="cvContent" id="print">
+            <!-- Home page -->
+            <div v-if="page==='home'" class="homepage middlePage">
+                <div>
+                <ul>
+                    <li>Create and edit your own CV from a template</li>
+                    <li>Print the CV or download it as pdf</li>
+                    <li>Save CVs to your profile online</li>
+                </ul>
+                </div>
+            </div>
+
+            <div v-if="page==='guide'" class="homepage middlePage">
+                <div>
+                <ul>
+                    <li>How to use this website...</li>
+                </ul>
+                </div>
+            </div>
+
+            <div v-if="page==='tips'" class="homepage middlePage">
+                <div>
+                <ul>
+                    <li>Tips on how to write your CV...</li>
+                </ul>
+                </div>
+            </div>
+            
+            <!-- CV -->
+            <div v-if="page==='cv'" class="cvContent middlePage" id="print">
                 <div class="cvPadding" v-bind:style="content.font">
     
                     <!-- Name & personal info -->
@@ -123,7 +156,10 @@
                 </div>       
             </div>
 
-        </td><!-- Right Side --><td  class="side">
+        </td>
+
+        <!-- Right Side -->
+        <td class="side">
 
             <!-- Login/Profile Buttons -->
             <div class="topbar right">
