@@ -6,10 +6,11 @@
     justify-content: center;
     /* box-shadow: inset -3px 0px 3px -3px rgba(0,0,0,1); */
     color: black;
-    margin-top: 10px;
+    margin: 15px 0px 2px 0px;
+    border-collapse: collapse;
 }
 
-.options span{
+.options button{
     /* flex-grow: 1; */
     height: 100%;
     display: flex;
@@ -17,12 +18,13 @@
     align-items: center;
     cursor: default;
     font-size: 20px;
-    font-weight: bold;
-    padding-left: 15px;
+    /* font-weight: bold; */
+    padding: 0px 15px;
+    margin: 0px 10px;
     user-select: none;
-    border-radius: 15px 15px 0px 0px;
-    /* margin: 0px 10px 0px 0px; */
-    
+    border: solid;
+    border-radius: 10px 10px 0px 0px;
+    border-width: 2px 2px 0px 2px;
 }
 
 .newCV{
@@ -32,11 +34,11 @@
 }
 
 .options span.unselected{
-    box-shadow: inset -1px 0px 2px 0px rgb(0, 0, 0, 0.75);
+    /* box-shadow: inset -2px 0px 2px 0px rgb(0, 0, 0, 0.75), inset 2px 0px 2px 0px rgba(255, 254, 254, 0.75);; */
 }
 
 .options span.selected{
-    box-shadow: inset 2px 0px 2px 0px rgb(0, 0, 0, 0.75);
+    /* box-shadow: inset 2px 0px 2px 0px rgb(0, 0, 0, 0.75); */
 }
 
 .options span.unselected:hover {
@@ -48,11 +50,11 @@
 }
 
 .options span.unselected:active {
-    box-shadow: inset 3px 0px 3px 0px rgb(0, 0, 0, 0.75);
+    /* box-shadow: inset 3px 0px 3px 0px rgb(0, 0, 0, 0.75); */
 }
 
 .options span.selected:active {
-    box-shadow: inset 3px 0px 3px 0px rgb(0, 0, 0, 0.75);
+    /* box-shadow: inset 3px 0px 3px 0px rgb(0, 0, 0, 0.75); */
 }
 
 .options span img{

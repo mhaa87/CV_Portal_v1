@@ -1,6 +1,10 @@
 
 .mainApp{
-    background-color: #d7e3ee;
+    background-color: #9ab2cf;
+}
+
+.homepage{
+    background-color: #819bb4;
 }
 
 .side, .middle{
@@ -10,16 +14,12 @@
 
 .topbar{
     /* background-color: #4d6eb3; */
-    background-color: #004c86;
+    background-color: #0a5691;
     color: white;
 }
 
 .topbar h1{
     color: white;
-}
-
-.options{
-    /* background-color: #7db9e8; */
 }
 
 .login{
@@ -28,10 +28,6 @@
 
 .navMenu button{
     color: white;
-}
-
-.options span.unselected{
-    background-color: #dbe7f0;
 }
 
 .navMenu button.unselected{
@@ -54,23 +50,27 @@
     background-color: #0e3e63;
 }
 
+.topbar button{
+    color: #7ccfff;
+}
+
 .topbar button.unselected{
     background-color: rgba(255, 255, 255, 0);
 }
 
-.topbar button.selected, .options span.selected{
+.topbar button.selected, .button span.selected{
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.topbar button.selected:hover, .options span.selected:hover {
+.topbar button.selected:hover, .options button.selected:hover {
     background-color: rgba(0, 0, 0, 0.15);
 }
 
-.topbar button.unselected:hover, .options span.unselected:hover {
+.topbar button.unselected:hover, .options button.unselected:hover {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-.topbar button.selected:active, .options span.selected:active, .topbar button.unselected:active, .options span.unselected:active{
+.topbar button.selected:active, .options button.selected:active, .topbar button.unselected:active, .options button.unselected:active{
     background-color: rgba(0, 0, 0, 0.5);
 }
 
