@@ -7,9 +7,10 @@ var app = new Vue({
         key: null,
         showLogin: false,
         register: false,
-        page: "home",
+        page: "cv",
         editMode: false,
         showCVmenu: false,
+        newCV: false,
         error: false,
         automaticLogin: false,
         user: {
