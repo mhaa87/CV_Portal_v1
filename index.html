@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Dynamisk CV</title>
-    <link rel="stylesheet" href="cvStyle.css">
-    <link rel="stylesheet" href="topbarStyle.css">
-    <link rel="stylesheet" href="navMenu.css">
-    <link rel="stylesheet" href="loginStyle.css">
-    <link rel="stylesheet" href="optionsMenu.css">
-    <link rel="stylesheet" href="colors.css">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="css/cvStyle.css">
+    <link rel="stylesheet" href="css/topbarStyle.css">
+    <link rel="stylesheet" href="css/navMenu.css">
+    <link rel="stylesheet" href="css/loginStyle.css">
+    <link rel="stylesheet" href="css/optionsMenu.css">
+    <link rel="stylesheet" href="css/colors.css">
+    <link rel="stylesheet" href="css/app.css">
     <script src="vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -36,15 +36,15 @@
             <div class="topbar">
                 <!-- Options Menu --><div v-if="page=='cv'" class="options">
                 <span @mousedown="download" class="unselected" style="max-width: 23%">
-                    Download<img src="download.svg"></span>
+                    Download<img src="Icons\download.svg"></span>
                 <span @mousedown="editMode = !editMode" :class="{selected: editMode, unselected: !editMode}" style="max-width: 15%">
-                    Edit<img src="edit.svg"></span>
+                    Edit<img src="Icons\edit.svg"></span>
                 <span v-if="loggedIn" @mousedown="save(cvName)" class="unselected">
-                    Save<img src="save.svg"></span>
+                    Save<img src="Icons\save.svg"></span>
                 <span v-if="loggedIn" @mousedown="newCV = !newCV" class="unselected">
-                    New<img src="new.svg"></span>
+                    New<img src="Icons\new.svg"></span>
                 <span v-if="loggedIn" @mousedown="toggleCVmenu" :class="{selected: showCVmenu, unselected: !showCVmenu}">
-                    Open<img src="open_2.svg"></span>
+                    Open<img src="Icons\open_2.svg"></span>
                 <span class="newCV" v-if="newCV">
                         <input><button>Save</button></span></div>
             </div>
