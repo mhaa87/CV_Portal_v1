@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/navMenu.css">
     <link rel="stylesheet" href="css/loginStyle.css">
     <link rel="stylesheet" href="css/optionsMenu.css">
+    <link rel="stylesheet" href="css/styleSettings.css">
     <link rel="stylesheet" href="css/colors.css">
     <link rel="stylesheet" href="css/app.css">
     <script src="vue.js"></script>
@@ -23,35 +24,50 @@
     <div id="app" class="mainApp"><table><tr>
 
         <!-- Left Side -->
-        <td class="side">
+        <td class="side leftSide">
 
             <!-- Top Bar -->
-            <div class="topbar"><h1>    Funkweb CV Portal</h1></div>
+            <div class="topbar leftTopbar"><h1>    Funkweb CV Portal</h1></div>
 
             <!-- Nav Menu -->
             <div class="navMenu">
-                <button :class="{selected: page==='cv', unselected: page!=='cv'}" @mousedown="page = 'cv'">My CV</button>
-                <button :class="{selected: page==='home', unselected: page!=='home'}" @mousedown="page = 'home'">Home</button>
-                <button :class="{selected: page==='guide', unselected: page!=='guide'}" @mousedown="page = 'guide'">Guide</button>
-                <button :class="{selected: page==='tips', unselected: page!=='tips'}" @mousedown="page = 'tips'">CV Tips</button>
+                <button :class="{selected: page==='cv'}" @mousedown="page = 'cv'">My CV</button>
+                <button :class="{selected: page==='home'}" @mousedown="page = 'home'">Home</button>
+                <button :class="{selected: page==='guide'}" @mousedown="page = 'guide'">Help</button>
+                <button :class="{selected: page==='tips'}" @mousedown="page = 'tips'">CV Tips</button>
 
         </td>
         
         <!-- Middle -->
         <td class="middle">
 
-            <div class="topbar">
+            <div class="topbar middleTopbar">
 
                 <!-- Options Menu -->
                 <div v-if="page=='cv'" class="options">
-                <button @mousedown="download" class="unselected">Download</button>
-                <button @mousedown="editMode = !editMode" :class="{selected: editMode, unselected: !editMode}">Edit</button>
-                <button v-if="loggedIn" @mousedown="save(cvName)" class="unselected">Save</button>
-                <button v-if="loggedIn" @mousedown="newCV = !newCV" class="unselected">New</button>
-                <button v-if="loggedIn" @mousedown="toggleCVmenu" :class="{selected: showCVmenu, unselected: !showCVmenu}">Open</button>
-                <span class="newCV" v-if="newCV">
-                    <input><button>Save</button>
-                </span></div>
+                    <button @mousedown="editMode = !editMode" :class="{selected: editMode}">Edit</button>
+                    <button v-if="loggedIn" @mousedown="save(cvName)">Save</button>
+                    <button @mousedown="download">Download</button>
+                    <span style="height: 100%">
+                        <button v-if="loggedIn" @mousedown="toggleCVmenu" :class="{selected: showCVmenu}">Open</button>
+                        <div v-if="showCVmenu && loggedIn" class="cvMenu">
+                            <template v-for="(item, key) in cvList">
+                                <button @click="loadData(item)" :class="{selected: item === cvName}">{{item}}</button>
+                                <!-- <span class="delete"><button @click="deleteData(item)">X</button></span> -->
+                            </template>
+                            <span v-if="1 > cvList.length">No saved CVs</span>
+                            <button @click="deleteData(cvName)">Delete '{{cvName}}'</button>
+                            <button @click="deleteAll">Delete All</button>
+                        </div>
+                    </span>
+                    <span style="height: 100%">
+                        <button v-if="loggedIn" @mousedown="newCV = !newCV; showCVmenu = false" :class="{selected: newCV}">New CV</button>
+                        <div class="newCV" v-if="newCV">
+                            <input v-model="newCVname"><button @click="save(newCVname)">Save</button>
+                        </div>
+                    </span>
+                </div>
+ 
             </div>
           
             <!-- Home page -->
@@ -86,7 +102,7 @@
                 <div class="cvPadding" v-bind:style="content.font">
     
                     <!-- Name & personal info -->
-                    <table style="width: 100%"><tr> 
+                    <table><tr> 
                         <td><div class="info">
                             <h2 class="name">
                                 <input v-if="editMode" v-model:value="content.name"></input> 
@@ -102,7 +118,7 @@
                                 </td></tr>
                             </template></table>
                         </div></td><td>
-                        <div class="profileImg"><img :src="content.profileImg"></div></td>
+                        <div class="profileImg"><img :src="content.profileImg" :style="profileImgStyle"></div></td>
                     </tr></table> 
     
                     <!-- Intro text -->
@@ -159,16 +175,31 @@
         </td>
 
         <!-- Right Side -->
-        <td class="side">
+        <td class="side rightSide">
 
             <!-- Login/Profile Buttons -->
-            <div class="topbar right">
-                <button v-if="loggedIn" class="topbutton unselected" @click="logout">Logout</button>
-                <button v-if="!loggedIn" class="topbutton" :class="{selected: showLogin && register, unselected: !showLogin || !register}" 
+            <!-- <div class="topbar rightTopbar"> -->
+            <div class="topbar rightTopbar">
+                <button v-if="loggedIn" class="topbutton" @click="logout">Logout</button>
+                <button v-if="!loggedIn" class="topbutton" :class="{selected: showLogin && register}" 
                 @click="showLogin = register ? !showLogin : true; register = showLogin">Register</button>  
-                <button v-if="!loggedIn" class="topbutton" :class="{selected: showLogin && !register, unselected: !showLogin || register}" 
+                <button v-if="!loggedIn" class="topbutton" :class="{selected: showLogin && !register}" 
                 @click="showLogin = register ? true : !showLogin; register = false">Login</button> 
                 <span v-if="loggedIn" class="centerText">Logged in: {{user.name}}   </span>
+            </div>
+
+            <!-- Style options -->
+            <div v-if="loggedIn" class="styleContent">
+                <div class="styleTitle">Font:</div> 
+                <select v-model="content.font['font-family']" :style="content.font">
+                    <option v-for="font in fonts" 
+                    :style="font.style"
+                    v-bind:value="font.value">{{font.name}}</option>
+                </select></br>
+                <div class="styleTitle">Profile Image</div> 
+                <input v-model:value="content.profileImg">
+                <input type="range" min="100" max="400" v-model:value="content.profileImgHeight">
+                <!-- {{profileImgStyle}} -->
             </div>
 
             <!-- Login Menu -->
@@ -186,7 +217,7 @@
                     </tr><tr>
                         <td v-if="register"><button type="submit">Register</button></td>
                         <td v-else><button type="submit">Login</button></td>
-                        <td><b>Automatic login: </b><input v-model:value="automaticLogin" type="checkbox"></td>
+                        <td><b>Remember me: </b><input v-model:value="automaticLogin" type="checkbox"></td>
                     </tr>
                 </table></form>
                 <span v-if="error" class="error">Error: {{errorMsg}}</span><span v-else><br></span>

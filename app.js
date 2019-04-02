@@ -11,6 +11,7 @@ var app = new Vue({
         editMode: false,
         showCVmenu: false,
         newCV: false,
+        newCVname: "default",
         error: false,
         automaticLogin: false,
         user: {
@@ -35,6 +36,7 @@ var app = new Vue({
                 {title: "Place", text: "City"},
             ],
             profileImg: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+            profileImgHeight: 150,
             intro: {title: "Introduction", text: "..."},
             other: {title: "Other", text: "..."},
             lists: [
@@ -55,8 +57,15 @@ var app = new Vue({
         }
         
     },
+
+    computed:{
+        profileImgStyle: function(){
+            return {"height": this.content.profileImgHeight + 'px'};
+        },
+    },
    
     methods: {
+
         getDurationText(duration){
             var text = "";
             if(duration.from.month.length > 0) text += duration.from.month + ".";
@@ -122,7 +131,7 @@ var app = new Vue({
             var cv = document.getElementById("print");
             var popupWin = window.open('', '_blank', 'width=' + screen.width*0.46 + 'px,height=900,location=no,left=200px');
             popupWin.document.open();
-            popupWin.document.write('<html><title>Preview</title><link rel="stylesheet" type="text/css" href="cvStyle.css" /></head><body onload="window.print()">'
+            popupWin.document.write('<html><title>Preview</title><link rel="stylesheet" type="text/css" href="css/cvStyle.css" /></head><body onload="window.print()">'
              + '<div style="' + this.printStyle(this.content.font) + '">'); 
             popupWin.document.write(cv.innerHTML);
             popupWin.document.write('</div></body></html>');
@@ -137,6 +146,7 @@ var app = new Vue({
 
         toggleCVmenu: function(){
             if(this.showCVmenu){this.showCVmenu = false; return};
+            this.newCV = false;
             this.getCVmenu();
         },
 
