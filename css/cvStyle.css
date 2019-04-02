@@ -3,7 +3,13 @@
     overflow: auto;
     background-color: rgb(255, 255, 255);
     height: 95%;
-    box-shadow: inset -3px 3px 3px -3px rgba(0,0,0,1),  inset 3px 0px 3px -3px rgba(0,0,0,1);
+    /* box-shadow: inset -3px 3px 3px -1px rgba(0,0,0,1),  inset 3px 0px 3px -1px rgba(0,0,0,1); */
+}
+
+.cvPadding table{
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
 }
 
 .cvPadding{
@@ -26,7 +32,7 @@ button{
 
 .profileImg img{
     width: auto;
-    height: 150px;
+    /* height: 150px; */
     margin-right: 0;
     margin-left: auto;
 }
@@ -77,3 +83,7 @@ td{vertical-align: top;}
 }
 
 .title{font-weight: bold;}
+
+button:focus {
+    outline:none !important;
+}

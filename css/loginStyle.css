@@ -16,40 +16,37 @@
 
 .login table{
     /* margin: auto; */
+    /* text-align: center; */
+    align-items: center;
+    justify-content: center;
 }
 
 .loginLabel{
     width: 30%;
 }
 
-.loginContent{
-    margin: auto;
-    padding-top: 10%;
-    width: 100mm;
-    display: grid;
-    font-size: 24px;
-}
-.loginContent td{
-    vertical-align: middle;
-}
-
-.loginContent table{
-    table-layout:fixed;
-    width:100%;
-}
-
-.loginContent input{
-    font-size: inherit;
-    width: 100%;
+.login button{
+    border: none;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    font-size: 20px;
+    padding: 5px 10px;
+    /* margin: 0px 5px; */
+    user-select: none;
+    border-radius: 10px 10px 10px 10px;
+    border-width: 2px 2px 2px 2px;
 }
 
-.loginContent button{
-    font-size: inherit;
-    padding: 10px;
-    width: 100%;
+.topbar button:active {
+    box-shadow: inset 5px 5px 4px 0px rgba(0, 0, 0, 0.75);
 }
 
 .login input{
     font-family: inherit;
     color: inherit;
+    align-items: center;
+    justify-content: center;
 }

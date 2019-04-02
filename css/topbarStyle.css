@@ -1,8 +1,11 @@
 .topbar {
+    position: relative;
     height: 5%;
     display: flex;
     /* justify-content: center; */
-    box-shadow: inset 0px -3px 2px -2px rgba(0,0,0,1);
+    box-shadow: inset 0px -4px 4px -4px rgba(0,0,0,1);
+    padding: 3px 0px;
+
 }
 
 .topbar .side{
@@ -10,11 +13,17 @@
     padding: 0px;
 }
 
-.side .right{
+
+.middleTopbar{
+    /* box-shadow: inset 3px -3px 2px -2px rgba(0,0,0,1), inset -3px 0px 2px -2px rgb(0, 0, 0); */
+}
+
+.rightTopbar{
     margin-top: auto;
     margin-bottom: auto;
     flex-flow: row-reverse;
     padding-right: 5%;
+    /* box-shadow: inset 0px -3px 2px -2px rgba(0,0,0,1), inset 3px 0px 2px -2px rgb(0, 0, 0); */
 }
 
 .middle .topbar{
@@ -31,27 +40,27 @@
     white-space: pre;
 }
 
-.rightSide{
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: 2.5%;
-    height: 100%;
-}
-
 .topbar button{
-    font-size: 20px;
-    /* font-weight: bold; */
     border: none;
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    font-size: 20px;
+    padding: 5px 10px;
+    margin: 0px 5px;
+    user-select: none;
+    border-radius: 10px 10px 10px 10px;
+    border-width: 2px 2px 2px 2px;
 }
 
 .topbar button.selected{
-    box-shadow: inset 3px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 3px 3px 3px 0px rgba(0, 0, 0, 0.75);
 }
 
 .topbar button.unselected:hover {
+    box-shadow: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.75);
 }
 
 .topbar button.unselected{
@@ -59,15 +68,11 @@
 }
 
 .topbar button.selected:hover {
-    /* box-shadow: inset 5px 0px 4px 0px rgba(0, 0, 0, 0.75); */
+    /* box-shadow: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.75); */
 }
 
-.topbar button.selected:active {
-    box-shadow: inset 5px 0px 4px 0px rgba(0, 0, 0, 0.75);
-}
-
-.topbar button.unselected:active {
-    box-shadow: inset 5px 0px 4px 0px rgba(0, 0, 0, 0.75);
+.topbar button:active {
+    box-shadow: inset 5px 5px 4px 0px rgba(0, 0, 0, 0.75);
 }
 
 .topbar button:focus {

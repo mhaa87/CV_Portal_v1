@@ -1,77 +1,31 @@
 
-.mainApp{
-    background-color: #9ab2cf;
+.mainApp, .topbar, .leftTopbar, .rightTopbar{
+    background-color: rgb(213, 226, 241);
 }
 
 .homepage{
-    background-color: #819bb4;
+    background-color: rgb(219, 235, 255);
 }
 
-.side, .middle{
-    /* background-color: rgba(0, 0, 0, 0.8); */
-    /* background-color: rgba(255, 255, 255, 0.6); */
+.topbar, .newCV,.cvMenu, .login, .styleTitle, button{
+    background-color: #2670d1;
 }
 
-.topbar{
-    /* background-color: #4d6eb3; */
-    background-color: #0a5691;
-    color: white;
+.topbar,.login, .styleTitle, button{
+    color: #eaf6ff;
 }
 
-.topbar h1{
-    color: white;
+button.selected{
+    background-color: #5d96e0;
 }
 
-.login{
-    background-color: rgba(212, 229, 247, 1);
+button:hover{
+    background-color: #5d96e0;
 }
 
-.navMenu button{
-    color: white;
+button:active{
+    background-color: #2670d1;
 }
 
-.navMenu button.unselected{
-    background-color: #004c86;
-}
-
-.navMenu button.selected{
-    background-color: #0e3e63;
-}
-
-.navMenu button.selected:hover{
-    background-color: #1a4f77;
-}
-
-.navMenu button.unselected:hover{
-    background-color: #4f80a7;
-}
-
-.navMenu button.selected:active, .navMenu button.unselected:active{
-    background-color: #0e3e63;
-}
-
-.topbar button{
-    color: #7ccfff;
-}
-
-.topbar button.unselected{
-    background-color: rgba(255, 255, 255, 0);
-}
-
-.topbar button.selected, .button span.selected{
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-.topbar button.selected:hover, .options button.selected:hover {
-    background-color: rgba(0, 0, 0, 0.15);
-}
-
-.topbar button.unselected:hover, .options button.unselected:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-.topbar button.selected:active, .options button.selected:active, .topbar button.unselected:active, .options button.unselected:active{
-    background-color: rgba(0, 0, 0, 0.5);
-}
 
 
