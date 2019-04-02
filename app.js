@@ -65,7 +65,6 @@ var app = new Vue({
     },
    
     methods: {
-
         getDurationText(duration){
             var text = "";
             if(duration.from.month.length > 0) text += duration.from.month + ".";
@@ -129,7 +128,7 @@ var app = new Vue({
 
         download: function(){
             var cv = document.getElementById("print");
-            var popupWin = window.open('', '_blank', 'width=' + screen.width*0.46 + 'px,height=900,location=no,left=200px');
+            var popupWin = window.open('', '_blank', 'width= 1000px,height=900,location=no,left=200px, top=20px');
             popupWin.document.open();
             popupWin.document.write('<html><title>Preview</title><link rel="stylesheet" type="text/css" href="css/cvStyle.css" /></head><body onload="window.print()">'
              + '<div style="' + this.printStyle(this.content.font) + '">'); 

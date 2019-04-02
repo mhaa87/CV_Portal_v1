@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/loginStyle.css">
     <link rel="stylesheet" href="css/optionsMenu.css">
     <link rel="stylesheet" href="css/styleSettings.css">
+    <link rel="stylesheet" href="css/rangeInput.css">
     <link rel="stylesheet" href="css/colors.css">
     <link rel="stylesheet" href="css/app.css">
     <script src="vue.js"></script>
@@ -196,8 +197,9 @@
                     :style="font.style"
                     v-bind:value="font.value">{{font.name}}</option>
                 </select></br>
-                <div class="styleTitle">Profile Image</div> 
-                <input v-model:value="content.profileImg">
+                <div class="styleTitle">Profile Image Link</div> 
+                <input v-model:value="content.profileImg"></br>
+                <div class="styleTitle">Profile Image Size</div> 
                 <input type="range" min="100" max="400" v-model:value="content.profileImgHeight">
                 <!-- {{profileImgStyle}} -->
             </div>
