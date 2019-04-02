@@ -1,0 +1,12 @@
+.styleTitle{
+
+}
+
+.styleContent{
+    margin-top: 15px;
+    margin-right: auto;
+    margin: 15px 15px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
