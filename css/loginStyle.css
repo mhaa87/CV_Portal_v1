@@ -6,17 +6,15 @@
 
 
 .error{
-    color: rgb(221, 47, 47);
-    border: 1px;
-    border-style: solid;
-    border-color: brown;
-    background-color: rgb(241, 241, 241);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
     text-align: center;
+    margin: 0px auto;
+    padding: 4px 4px;
+    background-color: #1451a0;
 }
 
 .login table{
-    /* margin: auto; */
-    /* text-align: center; */
     align-items: center;
     justify-content: center;
 }
@@ -28,25 +26,21 @@
 .login button{
     border: none;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: default;
     font-size: 20px;
-    padding: 5px 10px;
-    /* margin: 0px 5px; */
+    padding: 2px 20px;
+    margin: 4px 0px;
     user-select: none;
-    border-radius: 10px 10px 10px 10px;
-    border-width: 2px 2px 2px 2px;
+    box-shadow: 1px 1px 2px 0px rgba(0,0,0,1), inset 1px 1px 2px 0px rgb(255, 255, 255);
+    border-radius: 5px;
 }
 
-.topbar button:active {
-    box-shadow: inset 5px 5px 4px 0px rgba(0, 0, 0, 0.75);
+.login button:active {
+    box-shadow: inset 3px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    background-color: #1451a0;
 }
 
 .login input{
-    font-family: inherit;
-    color: inherit;
-    align-items: center;
-    justify-content: center;
+    /* text-align: center; */
+    vertical-align: middle;
 }
