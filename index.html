@@ -36,7 +36,6 @@
                 <button :class="{selected: page==='home'}" @mousedown="page = 'home'">Home</button>
                 <button :class="{selected: page==='guide'}" @mousedown="page = 'guide'">Help</button>
                 <button :class="{selected: page==='tips'}" @mousedown="page = 'tips'">CV Tips</button>
-
         </td>
         
         <!-- Middle -->
@@ -52,13 +51,14 @@
                     <span style="height: 100%">
                         <button v-if="loggedIn" @mousedown="toggleCVmenu" :class="{selected: showCVmenu}">Open</button>
                         <div v-if="showCVmenu && loggedIn" class="cvMenu">
-                            <template v-for="(item, key) in cvList">
-                                <button @click="loadData(item)" :class="{selected: item === cvName}">{{item}}</button>
-                                <!-- <span class="delete"><button @click="deleteData(item)">X</button></span> -->
-                            </template>
-                            <span v-if="1 > cvList.length">No saved CVs</span>
-                            <button @click="deleteData(cvName)">Delete '{{cvName}}'</button>
-                            <button @click="deleteAll">Delete All</button>
+                            <div class="cvList">
+                                <button v-for="(item, key) in cvList" @click="loadData(item)" :class="{selected: item === cvName}">{{item}}</button>
+                            </div>
+                            <div v-if="1 > cvList.length">No saved CVs</div>
+                            <div v-else>
+                                <button @click="deleteData(cvName)">Delete '{{cvName}}'</button>
+                                <button @click="deleteAll">Delete All</button>
+                            </div>
                         </div>
                     </span>
                     <span style="height: 100%">
@@ -186,11 +186,36 @@
                 @click="showLogin = register ? !showLogin : true; register = showLogin">Register</button>  
                 <button v-if="!loggedIn" class="topbutton" :class="{selected: showLogin && !register}" 
                 @click="showLogin = register ? true : !showLogin; register = false">Login</button> 
-                <span v-if="loggedIn" class="centerText">Logged in: {{user.name}}   </span>
+                <span v-if="loggedIn" class="centerText">Logged in: {{user.name}}</span>
             </div>
 
+            <!-- Login Menu -->
+            <div v-if="showLogin" class="login">
+                <form @submit.prevent="login">
+                    <table>
+                        <tr v-if="register">
+                            <td class="loginLabel"><b>Username: </b></td>
+                            <td><input placeholder="..." v-model:value="user.name"></td>
+                        </tr><tr>
+                            <td class="loginLabel"><b>Email: </b></td>
+                            <td><input placeholder="..." v-model:value="user.email" type="email"></td>
+                        </tr><tr>
+                            <td class="loginLabel"><b>Password: </b></td>
+                            <td><input placeholder="..." v-model.lazy:value="user.password" type="password"></td>
+                        </tr>
+                    </table>
+                    <div style="display: flex; align-content: center; flex-direction: column">
+                        <div style="margin: 0 auto;"><b>Remember me: </b><input v-model:value="automaticLogin" type="checkbox"></div>
+                        <div v-if="register" style="margin: 0 auto;"><button type="submit">Register</button></div>
+                        <div v-else style="margin: 0 auto;"><button type="submit">Login</button></div>
+                    </div>
+                </form>
+                <div v-if="error" class="error">Error: {{errorMsg}}</div>
+                <!-- <span v-else><br></span> -->
+            </div>
+            
             <!-- Style options -->
-            <div v-if="loggedIn" class="styleContent">
+            <div v-if="page === 'cv'" class="styleContent">
                 <div class="styleTitle">Font:</div> 
                 <select v-model="content.font['font-family']" :style="content.font">
                     <option v-for="font in fonts" 
@@ -201,29 +226,8 @@
                 <input v-model:value="content.profileImg"></br>
                 <div class="styleTitle">Profile Image Size</div> 
                 <input type="range" min="100" max="400" v-model:value="content.profileImgHeight">
-                <!-- {{profileImgStyle}} -->
             </div>
 
-            <!-- Login Menu -->
-            <div v-if="showLogin" class="login">
-                <form @submit.prevent="login"><table>
-                    <tr v-if="register">
-                        <td class="loginLabel"><b>Username: </b></td>
-                        <td><input placeholder="..." v-model:value="user.name"></td>
-                    </tr><tr>
-                        <td class="loginLabel"><b>Email: </b></td>
-                        <td><input placeholder="..." v-model:value="user.email" type="email"></td>
-                    </tr><tr>
-                        <td class="loginLabel"><b>Password: </b></td>
-                        <td><input placeholder="..." v-model.lazy:value="user.password" type="password"></td>
-                    </tr><tr>
-                        <td v-if="register"><button type="submit">Register</button></td>
-                        <td v-else><button type="submit">Login</button></td>
-                        <td><b>Remember me: </b><input v-model:value="automaticLogin" type="checkbox"></td>
-                    </tr>
-                </table></form>
-                <span v-if="error" class="error">Error: {{errorMsg}}</span><span v-else><br></span>
-            </div>
         </td></tr>
     </table></div>
 

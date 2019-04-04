@@ -15,9 +15,9 @@ var app = new Vue({
         error: false,
         automaticLogin: false,
         user: {
-            name: "testname",
-            email: "test@mail.com",
-            password: "testpassword",
+            name: "",
+            email: "",
+            password: "",
         },
         errorMsg: "",
         cvList: [],
@@ -89,13 +89,26 @@ var app = new Vue({
         login: function(){
             axios.post(this.uri + "/login", {"createUser": this.register, "key": this.key, "user": this.user}).then(res => {
                 this.loginResult(res.data);
+                console.log("Logged in with key: " + this.key);
             }).catch(err => {console.log(err)});                
         },
 
         autoLogin: function(){
+            console.log("autologin with key: " + this.key);
             axios.post(this.uri + "/login", {"createUser": false, "key": this.key, "user": false}).then(res => {
                 this.loginResult(res.data);
                 this.error = false;
+            }).catch(err => {console.log(err)});
+        },
+
+        getLastCV: function(){
+            console.log("Getting last CV");
+            axios.post(this.uri + "/getLastCV", {"key": this.key}).then(res => {
+                if(res.data.content) {
+                    this.content = res.data.content;
+                    this.cvName = res.data.cvName;
+                    console.log("found last CV: " + this.cvName)
+                }
             }).catch(err => {console.log(err)});
         },
 
@@ -103,19 +116,24 @@ var app = new Vue({
             // console.log(data);
             this.loggedIn = data.status;
             this.error = !data.status;
-            if(this.error) {this.errorMsg = data.msg; return;}
+            if(this.error) {
+                if(this.autoLogin) this.error = false;
+                this.errorMsg = data.msg; 
+                return;
+            }
             this.showLogin = false;
             this.key = data.key;
             localStorage.setItem("key", data.key);
             localStorage.setItem("autoLogin", this.automaticLogin ? 'true' : 'false');
             this.user.name = data.name;
+            this.getLastCV();
         },
 
         logout: function(){
             this.loggedIn = false;
             this.editMode = false;
             this.openMenu = false;
-            this.user = {};
+            this.user = {name: "",email: "", password: ""};
         },
 
         save: function(name){
